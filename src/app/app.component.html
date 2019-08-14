@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <form  #f="ngForm" (ngSubmit)="onCreate(f.value)" >
+        
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" ngModel name='title' required>
+    </div>
+    <div class="form-group">
+      <label>Content</label>
+    <input type="text" class="form-control" ngModel name='content' required>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Send</button>
+  </form>
+    <hr>
+    <button class="btn btn-primary" (click)=onFetchPosts()>Fetch post</button>
+    <button class="btn btn-warning" style="margin-left: 5px" (click)=onClearPosts()>Clear Post</button>
+    <div>
+    <p *ngIf="loadedPosts.length < 1 && !isFetching">No posts available</p>
+    <ul class="list-group" *ngIf="loadedPosts.length >=1  && !isFetching">
+      <li class="list-group-item" *ngFor="let post of loadedPosts">
+        <h1>{{post.title}}</h1>
+        <p>{{post.content}}</p>
+      </li>
+    </ul>
+    </div>
+    <p *ngIf="isFetching && !error">Loading....</p>
+    <div class="alert alert-danger" *ngIf="error">
+      <p>{{error}}</p>
+    </div>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>
